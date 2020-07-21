@@ -4,7 +4,7 @@
       <ToolBar />
     </div>
     <div class="editor-main">
-      <Split style="height: 2000px;" :gutterSize="5">
+      <Split style="height: 1000px;" :gutterSize="5">
         <SplitPanel :size="80">
           <Editor />
         </SplitPanel>
@@ -27,8 +27,8 @@ export default {
     ToolBar,
     Editor,
     Split,
-    SplitPanel
-  }
+    SplitPanel,
+  },
 };
 </script>
 

@@ -9,9 +9,11 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "@types/uuid": "^8.0.0",
     "core-js": "^3.6.5",
     "split.js": "^1.6.2",
     "three": "^0.118.3",
+    "uuid": "^8.2.0",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.3",
     "vue-property-decorator": "^8.4.2",
@@ -34,7 +36,7 @@
     "eslint-plugin-vue": "^6.2.2",
     "less": "^3.0.4",
     "less-loader": "^5.0.0",
-    "prettier": "^1.19.1",
+    "prettier": "^2.0.5",
     "typescript": "~3.9.3",
     "vue-template-compiler": "^2.6.11"
   }
