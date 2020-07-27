@@ -1,4 +1,4 @@
-import { Camera, WebGLRenderer, Scene } from "three";
+import { Camera, WebGLRenderer, Scene, Object3D } from "three";
 import { Element } from "../element";
 import { Controller } from "../controller";
 
@@ -26,7 +26,9 @@ abstract class View {
       throw new Error("element参数不能为空");
     }
     this.elements.push(ele);
-    this.scene.add(ele.element);
+    ele.elements.forEach(el => {
+      this.scene.add(el);
+    })
   }
 
   public addController(ctrl: Controller) {

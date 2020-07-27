@@ -7,11 +7,7 @@ import {
   GridHelper,
   CameraHelper,
   Raycaster,
-  Vector2,
-  BufferGeometry,
-  BufferAttribute,
-  LineBasicMaterial,
-  Line,
+  Vector2
 } from "three";
 import { View } from "./View";
 
@@ -20,7 +16,6 @@ class PerspectiveView extends View {
   observeCamera!: PerspectiveCamera;
   mouse: Vector2;
   raycaster: Raycaster;
-  line!: Line;
 
   constructor() {
     super();
@@ -67,17 +62,6 @@ class PerspectiveView extends View {
     const cameraPerspectiveHelper = new CameraHelper(this.camera);
     scene.add(cameraPerspectiveHelper);
 
-    let geometry = new BufferGeometry();
-    geometry.setAttribute(
-      "position",
-      new BufferAttribute(new Float32Array(4 * 3), 3)
-    );
-    let material = new LineBasicMaterial({
-      color: 0xffffff,
-      transparent: true,
-    });
-    this.line = new Line(geometry, material);
-
     scene.add(this.camera);
     scene.add(this.observeCamera);
 
@@ -91,31 +75,12 @@ class PerspectiveView extends View {
     this.controllers.forEach((ctrl) => {
       if (ctrl.update) ctrl.update();
     });
-    this.elements.forEach((ele) => {
-      if (ele.update) ele.update();
-    });
 
     this.raycaster.setFromCamera(this.mouse, this.camera);
 
-    for (let mesh in this.elements) {
-      let intersects = this.raycaster.intersectObject(mesh);
-      if (intersects.length > 0) {
-        let intersect = intersects[0];
-        let face = intersect.face;
-        let linePosition = this.line.geometry.attributes.position;
-        let meshPosition = mesh.geometry.attributes.position;
-
-        linePosition.copyAt(0, meshPosition, face.a);
-        linePosition.copyAt(1, meshPosition, face.b);
-        linePosition.copyAt(2, meshPosition, face.c);
-        linePosition.copyAt(3, meshPosition, face.a);
-        mesh.updateMatrix();
-        this.line.geometry.applyMatrix4(mesh.matrix);
-        this.line.visible = true;
-      } else {
-        this.line.visible = false;
-      }
-    }
+    this.elements.forEach((ele) => {
+      if (ele.update) ele.update(this.raycaster);
+    });
 
     // this.renderer.setViewport(0, 0, 400, 200);
     // this.renderer.render(this.scene, this.observeCamera);

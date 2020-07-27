@@ -6,10 +6,10 @@ class Box extends Element {
     super();
   }
 
-  public create(): Object3D {
+  public create(): Object3D[] {
     const geometry = new BoxBufferGeometry(10, 10, 10);
     const material = new MeshBasicMaterial({ color: 0xffaa00 });
-    return new Mesh(geometry, material);
+    return [new Mesh(geometry, material)];
   }
 
   /**

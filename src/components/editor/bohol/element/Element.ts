@@ -1,11 +1,12 @@
-import { Object3D, Geometry, Vector2, Raycaster } from "three";
+import { Object3D, Geometry, Vector2, Raycaster, Mesh } from "three";
 import { v4 as uuidv4 } from "uuid";
 
 interface Element {
   uuid: string;
   geometry?: Geometry;
-  element: Object3D;
-  update(): void;
+  mesh: Mesh,
+  elements: Object3D[];
+  update(raycaster: Raycaster): void;
   selected(): void;
 }
 
@@ -19,13 +20,13 @@ abstract class Element extends Object3D {
 
   private init() {
     this.uuid = uuidv4();
-    this.element = this.create();
+    this.elements = this.create();
   }
 
   /**
    * 创建元素
    */
-  public abstract create(): Object3D;
+  public abstract create(): Object3D[];
 }
 
 export { Element };
