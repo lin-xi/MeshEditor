@@ -26,7 +26,20 @@ export default {
   .split {
     .gutter {
       background-color: #383838;
+      &.gutter-horizontal {
+        background-image: none;
+      }
     }
+  }
+
+  i {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    background-size: 100% 100%;
+  }
+  .icon-grid {
+    background-image: url(./assets/grid.svg);
   }
 }
 </style>

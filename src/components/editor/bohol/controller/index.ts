@@ -1,2 +1,4 @@
 export { Controller } from "./Controller";
-export { OrbitControl } from "./OrbitControl";
+export { OrbitController } from "./OrbitController";
+export { MapController } from "./MapController";
+export { TrackballController } from "./TrackballController";

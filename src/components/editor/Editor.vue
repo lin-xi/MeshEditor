@@ -3,8 +3,8 @@
 </template>
 
 <script lang="javascript">
-import { Stage, PerspectiveView, OrbitControl, Box } from './bohol'
-
+import { Stage, PerspectiveView, MapController, PLYModel, Loader } from './bohol'
+import { global } from './global.ts'
 
 export default {
   name: "editor",
@@ -15,21 +15,32 @@ export default {
     }
   },
   mounted() {
-    this.$nextTick(()=> {
-      this.init()
+    global.eventHub.$on('propertyChange', (target, data) => {
+      for (const key in data) {
+        target[key] = data[key]
+      }
     })
+    this.init();
   },
   methods: {
-    init() {
-      console.log(this.$refs.editor.getBoundingClientRect())
+    async init() {
       const stage = new Stage(this.$refs.editor);
-      stage.setBackgroundColor('coral')
+      stage.setBackgroundColor('coral');
       const view = new PerspectiveView();
       stage.addView('default', view, true);
 
-      view.addController(new OrbitControl())
+      view.addController(new MapController())
 
-      view.addElement(new Box())
+      const geo = await Loader.loadPLY("/vr.ply");
+      const mesh = new PLYModel(geo);
+      mesh.element.rotation.x = Math.PI / 2;
+      view.addElement(mesh);
+
+      global.eventHub.$emit('property', mesh, {
+        x: mesh.element.position.x,
+        y: mesh.element.position.y,
+        z: mesh.element.position.z
+      })
     }
   }
 }

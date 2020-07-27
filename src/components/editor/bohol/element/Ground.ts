@@ -1,7 +1,7 @@
 import { Object3D, BoxBufferGeometry, MeshBasicMaterial, Mesh } from "three";
 import { Element } from "./Element";
 
-class Box extends Element {
+class Ground extends Element {
   constructor() {
     super();
   }
@@ -13,6 +13,13 @@ class Box extends Element {
   }
 
   /**
+   * update
+   */
+  public update(): void {
+    console.log("update");
+  }
+
+  /**
    * 元素选中
    */
   public selected(): void {
@@ -20,4 +27,4 @@ class Box extends Element {
   }
 }
 
-export { Box };
+export { Ground };

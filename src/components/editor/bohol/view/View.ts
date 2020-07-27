@@ -9,6 +9,8 @@ interface View {
   renderer: WebGLRenderer;
   elements: Element[];
   controllers: Controller[];
+  width: number;
+  height: number;
 }
 
 abstract class View {
@@ -20,8 +22,10 @@ abstract class View {
   }
 
   public addElement(ele: Element) {
+    if (!ele) {
+      throw new Error("element参数不能为空");
+    }
     this.elements.push(ele);
-    console.log("scene>>>", this.scene, ele.element);
     this.scene.add(ele.element);
   }
 

@@ -1,8 +1,9 @@
-import { Object3D } from "three";
+import { Object3D, Geometry, Vector2, Raycaster } from "three";
 import { v4 as uuidv4 } from "uuid";
 
 interface Element {
   uuid: string;
+  geometry?: Geometry;
   element: Object3D;
   update(): void;
   selected(): void;
@@ -10,8 +11,9 @@ interface Element {
 
 /** 元素类 */
 abstract class Element extends Object3D {
-  constructor() {
+  constructor(geo?: Geometry) {
     super();
+    this.geometry = geo;
     this.init();
   }
 
