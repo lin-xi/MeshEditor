@@ -1,4 +1,10 @@
-import { Object3D, BoxBufferGeometry, MeshBasicMaterial, Mesh } from "three";
+import {
+  Object3D,
+  BoxBufferGeometry,
+  MeshBasicMaterial,
+  Mesh,
+  Raycaster,
+} from "three";
 import { Element } from "./Element";
 
 class Box extends Element {
@@ -17,6 +23,10 @@ class Box extends Element {
    */
   public selected(): void {
     console.log("selected");
+  }
+
+  public update(raycaster: Raycaster) {
+    //do nothing
   }
 }
 

@@ -1,25 +1,34 @@
-import { Object3D, Geometry, Vector2, Raycaster, Mesh } from "three";
+import {
+  Object3D,
+  BufferGeometry,
+  BoxBufferGeometry,
+  MeshStandardMaterial,
+  Vector2,
+  Raycaster,
+  Mesh,
+  Material,
+} from "three";
 import { v4 as uuidv4 } from "uuid";
-
-interface Element {
-  uuid: string;
-  geometry?: Geometry;
-  mesh: Mesh,
-  elements: Object3D[];
-  update(raycaster: Raycaster): void;
-  selected(): void;
-}
 
 /** 元素类 */
 abstract class Element extends Object3D {
-  constructor(geo?: Geometry) {
-    super();
-    this.geometry = geo;
-    this.init();
-  }
+  uuid: string;
+  geometry: BufferGeometry;
+  mesh: Mesh;
+  elements!: Object3D[];
 
-  private init() {
+  constructor() {
+    super();
     this.uuid = uuidv4();
+    this.geometry = new BoxBufferGeometry(1, 1, 1);
+    this.mesh = new Mesh(
+      this.geometry,
+      new MeshStandardMaterial({
+        color: 0x0055ff,
+        flatShading: true,
+        wireframe: true,
+      })
+    );
     this.elements = this.create();
   }
 
@@ -27,6 +36,7 @@ abstract class Element extends Object3D {
    * 创建元素
    */
   public abstract create(): Object3D[];
+  public abstract update(raycaster: Raycaster): void;
 }
 
 export { Element };

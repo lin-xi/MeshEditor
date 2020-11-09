@@ -6,5 +6,5 @@ export {
   TrackballController,
 } from "./controller";
 export { View, PerspectiveView } from "./view";
-export { Element, Box, PLYModel } from "./element";
+export { Element, Box, GLTFModel } from "./element";
 export { Loader } from "./loader";

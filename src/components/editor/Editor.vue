@@ -3,7 +3,7 @@
 </template>
 
 <script lang="javascript">
-import { Stage, PerspectiveView, MapController, PLYModel, Loader } from './bohol'
+import { Stage, PerspectiveView, MapController, GLTFModel, Loader } from './bohol'
 import { global } from './global.ts'
 
 export default {
@@ -31,16 +31,22 @@ export default {
 
       view.addController(new MapController())
 
-      const geo = await Loader.loadPLY("/vr.ply");
-      const mesh = new PLYModel(geo);
-      mesh.element.rotation.x = Math.PI / 2;
-      view.addElement(mesh);
+      // const geo = await Loader.loadPLY("/vr.ply");
+      // const element = new PLYModel(geo);
+      // element.mesh.rotation.x = Math.PI / 2;
+      // view.addElement(element);
 
-      global.eventHub.$emit('property', mesh, {
-        x: mesh.element.position.x,
-        y: mesh.element.position.y,
-        z: mesh.element.position.z
-      })
+      const gltf = await Loader.loadGLTF("https://robot-vr-public.cdn.bcebos.com/1672358cb6a64b7092e5b68b21ac3c01/model");
+      console.log("gltf>>>", gltf.scene.children[0])
+      const element = new GLTFModel(gltf.scene.children[0]);
+      element.mesh.rotation.x = Math.PI / 2;
+      view.addElement(element);
+
+      // global.eventHub.$emit('property', mesh, {
+      //   x: mesh.element.position.x,
+      //   y: mesh.element.position.y,
+      //   z: mesh.element.position.z
+      // })
     }
   }
 }

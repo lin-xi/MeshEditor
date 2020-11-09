@@ -20,8 +20,8 @@ class OrbitController extends Controller {
       MIDDLE: MOUSE.DOLLY,
       RIGHT: MOUSE.ROTATE,
     };
-    this.control.enableDamping = true;
-    this.control.dampingFactor = 0.08;
+    this.control.enableDamping = false;
+    this.control.dampingFactor = 1;
 
     this.control.enablePan = true;
     this.control.enableRotate = true;

@@ -21,7 +21,7 @@ class MapController extends Controller {
       RIGHT: MOUSE.ROTATE,
     };
     this.control.enableDamping = true;
-    this.control.dampingFactor = 0.05;
+    this.control.dampingFactor = 0.1;
 
     this.control.screenSpacePanning = false;
     this.control.minDistance = 10;

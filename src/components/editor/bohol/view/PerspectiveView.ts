@@ -7,7 +7,7 @@ import {
   GridHelper,
   CameraHelper,
   Raycaster,
-  Vector2
+  Vector2,
 } from "three";
 import { View } from "./View";
 
@@ -65,7 +65,7 @@ class PerspectiveView extends View {
     scene.add(this.camera);
     scene.add(this.observeCamera);
 
-    document.addEventListener("mousemove", this.onMouseMove, false);
+    document.addEventListener("mousemove", this.onMouseMove.bind(this), false);
   }
 
   public render() {

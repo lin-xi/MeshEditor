@@ -1,60 +1,39 @@
 import {
   Object3D,
   Mesh,
-  Geometry,
-  MeshStandardMaterial,
   Raycaster,
   BufferGeometry,
-  BufferAttribute,
-  LineBasicMaterial,
-  Line,
+  MeshStandardMaterial,
 } from "three";
 import { SimplifyModifier } from "three/examples/jsm/modifiers/SimplifyModifier.js";
 
 import { Element } from "./Element";
 
-class PLYModel extends Element {
-  line: Line;
-
-  constructor(geometry: BufferGeometry) {
+class GLTFModel extends Element {
+  constructor(mesh: Mesh) {
     super();
-    this.geometry = geometry;
-    this.line = new Line();
+    this.mesh = mesh;
     this.elements = this.create();
   }
 
   public create(): Object3D[] {
-    if (this.geometry) {
-      this.geometry.computeVertexNormals();
+    if (this.mesh) {
       const material = new MeshStandardMaterial({
         color: 0x0055ff,
         flatShading: true,
         wireframe: true,
       });
-
-      this.mesh = new Mesh(this.geometry, material);
+      // this.mesh.material = material;
 
       const modifier = new SimplifyModifier();
-      const count = Math.floor(this.geometry.attributes.position.count * 0.875); // number of vertices to remove
+      const simplified = this.mesh.geometry as BufferGeometry;
+      const count = Math.floor(simplified.attributes.position.count * 0.875); // number of vertices to remove
+
       console.time("Simplify>>>>>");
-      const simplifyGeometry = modifier.modify(this.geometry, count);
+      this.mesh.geometry = modifier.modify(simplified, count);
       console.timeEnd("Simplify>>>>>");
-      // simplifyGeometry.computeVertexNormals();
-      // const simplified = new Mesh(this.geometry, material);
 
-      const geometry = new BufferGeometry();
-      geometry.setAttribute(
-        "position",
-        new BufferAttribute(new Float32Array(4 * 3), 3)
-      );
-
-      const linematerial = new LineBasicMaterial({
-        color: 0xffffff,
-        transparent: true,
-      });
-
-      this.line = new Line(geometry, linematerial);
-      return [this.mesh, this.line];
+      return [this.mesh];
     } else {
       return [new Object3D()];
     }
@@ -67,7 +46,7 @@ class PLYModel extends Element {
     console.log("selected");
   }
 
-  public update(raycaster: Raycaster): void {
+  public update(): void {
     // const intersects = raycaster.intersectObjects([this.mesh], true);
     // if (intersects.length > 0) {
     //   const intersect = intersects[0];
@@ -89,4 +68,4 @@ class PLYModel extends Element {
   }
 }
 
-export { PLYModel };
+export { GLTFModel };
