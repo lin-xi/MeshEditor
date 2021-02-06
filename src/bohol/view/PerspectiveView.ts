@@ -12,8 +12,8 @@ import {
 import { View } from "./View";
 
 class PerspectiveView extends View {
-  camera!: PerspectiveCamera;
-  observeCamera!: PerspectiveCamera;
+  camera?: PerspectiveCamera;
+  observeCamera?: PerspectiveCamera;
   mouse: Vector2;
   raycaster: Raycaster;
 
@@ -69,19 +69,20 @@ class PerspectiveView extends View {
   }
 
   public render() {
-    this.renderer.setViewport(0, 0, this.width, this.height);
-    this.renderer.render(this.scene, this.camera);
+    if(this.scene && this.camera) {
+      this.renderer.setViewport(0, 0, this.width, this.height);
+      this.renderer.render(this.scene, this.camera);
 
-    this.controllers.forEach((ctrl) => {
-      if (ctrl.update) ctrl.update();
-    });
+      this.controllers.forEach((ctrl) => {
+        if (ctrl.update) ctrl.update();
+      });
 
-    this.raycaster.setFromCamera(this.mouse, this.camera);
+      this.raycaster.setFromCamera(this.mouse, this.camera);
 
-    this.elements.forEach((ele) => {
-      if (ele.update) ele.update(this.raycaster);
-    });
-
+      this.elements.forEach((ele) => {
+        if (ele.update) ele.update(this.raycaster);
+      });
+    }
     // this.renderer.setViewport(0, 0, 400, 200);
     // this.renderer.render(this.scene, this.observeCamera);
   }
@@ -93,10 +94,12 @@ class PerspectiveView extends View {
   }
 
   public resize() {
-    const rect = this.container.getBoundingClientRect();
-    this.camera.aspect = rect.width / rect.height;
-    this.camera.updateProjectionMatrix();
-    this.renderer.setSize(rect.width, rect.height);
+    if(this.camera) {
+      const rect = this.container.getBoundingClientRect();
+      this.camera.aspect = rect.width / rect.height;
+      this.camera.updateProjectionMatrix();
+      this.renderer.setSize(rect.width, rect.height);
+    }
   }
 }
 

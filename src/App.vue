@@ -5,6 +5,10 @@
 </template>
 
 <script lang="javascript">
+import Vue from 'vue';
+import Element from 'element-ui';
+Vue.use(Element, { size: 'small'});
+
 export default {
   name: "app"
 };
@@ -32,7 +36,7 @@ export default {
     }
   }
 
-  i {
+  .icon {
     width: 20px;
     height: 20px;
     display: inline-block;

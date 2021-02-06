@@ -39,7 +39,7 @@ export default {
     Property,
   },
   mounted() {
-    this.hstlye = { height: window.innerHeight - 40 + "px" };
+    this.hstlye = { height: window.innerHeight - 60 + "px" };
   },
 };
 </script>
@@ -48,7 +48,7 @@ export default {
 .editor {
   background-color: #444;
   .editor-toolbar {
-    height: 40px;
+    height: 60px;
   }
 }
 </style>

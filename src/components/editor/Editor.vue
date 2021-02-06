@@ -3,7 +3,8 @@
 </template>
 
 <script lang="javascript">
-import { Stage, PerspectiveView, MapController, GLTFModel, Loader } from './bohol'
+import { Stage, PerspectiveView, MapController, GLTFModel, Loader } from '@/bohol'
+import ObjectManager from './ObjectManager.ts'
 import { global } from './global.ts'
 
 export default {
@@ -15,32 +16,37 @@ export default {
     }
   },
   mounted() {
-    global.eventHub.$on('propertyChange', (target, data) => {
-      for (const key in data) {
-        target[key] = data[key]
-      }
-    })
-    this.init();
+    setTimeout(this.init, 1000)
   },
   methods: {
     async init() {
       const stage = new Stage(this.$refs.editor);
-      stage.setBackgroundColor('coral');
+      stage.setBackgroundColor('#cccccc');
+      ObjectManager.setStage(stage);
+
       const view = new PerspectiveView();
       stage.addView('default', view, true);
+      view.addController(new MapController());
 
-      view.addController(new MapController())
+      global.eventHub.$on('create', ele => {
+        const element = ObjectManager.create(ele);
+      });
+
+      global.eventHub.$on('propertyChange', (target, data) => {
+      })
+
+      
 
       // const geo = await Loader.loadPLY("/vr.ply");
       // const element = new PLYModel(geo);
       // element.mesh.rotation.x = Math.PI / 2;
       // view.addElement(element);
 
-      const gltf = await Loader.loadGLTF("https://robot-vr-public.cdn.bcebos.com/1672358cb6a64b7092e5b68b21ac3c01/model");
-      console.log("gltf>>>", gltf.scene.children[0])
-      const element = new GLTFModel(gltf.scene.children[0]);
-      element.mesh.rotation.x = Math.PI / 2;
-      view.addElement(element);
+      // const gltf = await Loader.loadGLTF("https://robot-vr-public.cdn.bcebos.com/1672358cb6a64b7092e5b68b21ac3c01/model");
+      // console.log("gltf>>>", gltf.scene.children[0])
+      // const element = new GLTFModel(gltf.scene.children[0]);
+      // element.mesh.rotation.x = Math.PI / 2;
+      // view.addElement(element);
 
       // global.eventHub.$emit('property', mesh, {
       //   x: mesh.element.position.x,

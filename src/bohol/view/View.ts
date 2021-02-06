@@ -3,8 +3,8 @@ import { Element } from "../element";
 import { Controller } from "../controller";
 
 interface View {
-  scene: Scene;
-  camera: Camera;
+  scene?: Scene;
+  camera?: Camera;
   container: HTMLElement;
   renderer: WebGLRenderer;
   elements: Element[];
@@ -21,25 +21,26 @@ abstract class View {
     this.controllers = [];
   }
 
+  public init(scene: Scene, node: HTMLElement) {
+    this.scene = scene;
+    this.container = node;
+    this.create(scene, node);
+  }
+
   public addElement(ele: Element) {
     if (!ele) {
       throw new Error("element参数不能为空");
     }
-    this.elements.push(ele);
-    ele.elements.forEach(el => {
-      this.scene.add(el);
-    })
+    if(this.scene) {
+      this.elements.push(ele);
+      this.scene.add(ele.mesh);
+    }
   }
 
   public addController(ctrl: Controller) {
-    ctrl.init(this.camera, this.renderer);
-    this.controllers.push(ctrl);
-  }
-
-  public init(scene: Scene, node: HTMLElement): void {
-    if (!this.isInitialized) {
-      this.create(scene, node);
-      this.isInitialized = true;
+    if(this.camera) {
+      ctrl.init(this.camera, this.renderer);
+      this.controllers.push(ctrl);
     }
   }
 
