@@ -29,13 +29,11 @@ export default {
       view.addController(new MapController());
 
       global.eventHub.$on('create', ele => {
-        const element = ObjectManager.create(ele);
+        ObjectManager.create(ele);
       });
 
       global.eventHub.$on('propertyChange', (target, data) => {
       })
-
-      
 
       // const geo = await Loader.loadPLY("/vr.ply");
       // const element = new PLYModel(geo);

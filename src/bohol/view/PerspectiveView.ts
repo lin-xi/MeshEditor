@@ -3,7 +3,6 @@ import {
   WebGLRenderer,
   PerspectiveCamera,
   DirectionalLight,
-  AmbientLight,
   GridHelper,
   CameraHelper,
   Raycaster,
@@ -37,39 +36,26 @@ class PerspectiveView extends View {
     this.renderer.autoClear = false;
     node.appendChild(this.renderer.domElement);
 
-    const lightUp = new DirectionalLight(0xffffff);
-    lightUp.position.set(1, 1, 1).normalize();
-    scene.add(lightUp);
-
-    const lightDown = new DirectionalLight(0xffffff);
-    lightDown.position.set(-1, -1, -1).normalize();
-    scene.add(lightDown);
-
-    const ambientLight = new AmbientLight(0xcccccc);
-    scene.add(ambientLight);
+    const directionLight = new DirectionalLight(0xffffff);
+    directionLight.position.set(0, 0, 200);
+    scene.add(directionLight);
 
     const helper = new GridHelper(160, 10);
     scene.add(helper);
 
     const aspect = (0.5 * this.width) / this.height;
-    this.camera = new PerspectiveCamera(50, aspect, 1, 1000);
-    this.camera.position.set(0, 0, 200);
-
-    this.observeCamera = new PerspectiveCamera(50, aspect, 150, 1000);
-    this.observeCamera.position.set(0, 0, 800);
-    this.observeCamera.rotation.y = Math.PI;
+    this.camera = new PerspectiveCamera(75, aspect, 1, 1000);
+    this.camera.position.set(0, 0, 100);
 
     const cameraPerspectiveHelper = new CameraHelper(this.camera);
     scene.add(cameraPerspectiveHelper);
-
     scene.add(this.camera);
-    scene.add(this.observeCamera);
 
     document.addEventListener("mousemove", this.onMouseMove.bind(this), false);
   }
 
   public render() {
-    if(this.scene && this.camera) {
+    if (this.scene && this.camera) {
       this.renderer.setViewport(0, 0, this.width, this.height);
       this.renderer.render(this.scene, this.camera);
 
@@ -94,7 +80,7 @@ class PerspectiveView extends View {
   }
 
   public resize() {
-    if(this.camera) {
+    if (this.camera) {
       const rect = this.container.getBoundingClientRect();
       this.camera.aspect = rect.width / rect.height;
       this.camera.updateProjectionMatrix();

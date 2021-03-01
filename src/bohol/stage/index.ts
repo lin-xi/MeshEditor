@@ -1,12 +1,12 @@
 import { Scene, Color } from "three";
 import { View } from "../view";
-import {Element} from "../element";
+import { Element } from "../element";
 
 class Stage {
   container: HTMLElement;
   scene: THREE.Scene;
   views: Map<string, View>;
-  currentView ?: View;
+  currentView?: View;
   currentViewName: string;
   width: number;
   height: number;
@@ -27,23 +27,23 @@ class Stage {
     this.scene.background = new Color(color);
   }
 
-  addView(name: string, view: View, setCurrent: boolean = true) {
+  addView(name: string, view: View, setCurrent = true) {
     view.init(this.scene, this.container);
     this.views.set(name, view);
     if (setCurrent) {
       this.currentView = view;
       this.currentViewName = name;
-    } 
+    }
   }
 
   addElement(ele: Element) {
-    if(this.currentView) {
+    if (this.currentView) {
       this.currentView.addElement(ele);
     }
   }
 
   setCurrentView(name: string) {
-    if(this.views.has(name)) {
+    if (this.views.has(name)) {
       this.currentView = this.views.get(name);
       this.currentViewName = name;
     }

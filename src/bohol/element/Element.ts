@@ -23,8 +23,7 @@ abstract class Element extends Object3D {
    * 创建元素
    */
   public abstract update(raycaster: Raycaster): void;
-  public abstract showWireframe(show: boolean): void;
-  public abstract setBackground(color: string): void;
+  public abstract selected(raycaster: Raycaster): void;
 }
 
 export { Element };

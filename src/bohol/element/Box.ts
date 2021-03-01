@@ -1,33 +1,35 @@
-// import {
-//   Object3D,
-//   BoxBufferGeometry,
-//   MeshBasicMaterial,
-//   Mesh,
-//   Raycaster,
-// } from "three";
-// import { Element } from "./Element";
+import { BoxBufferGeometry, MeshBasicMaterial, Mesh } from "three";
+import { Element } from "./Element";
 
-// class Box extends Element {
-//   constructor() {
-//     super();
-//   }
+class Box extends Element {
+    width: number;
+    height: number;
+    length: number;
 
-//   public create(): Object3D[] {
-//     const geometry = new BoxBufferGeometry(10, 10, 10);
-//     const material = new MeshBasicMaterial({ color: 0xffaa00 });
-//     return [new Mesh(geometry, material)];
-//   }
+    constructor(width = 10, height = 10, length = 10) {
+        super();
 
-//   /**
-//    * 元素选中
-//    */
-//   public selected(): void {
-//     console.log("selected");
-//   }
+        this.width = width;
+        this.height = height;
+        this.length = length;
 
-//   public update(raycaster: Raycaster) {
-//     //do nothing
-//   }
-// }
+        const geometry = new BoxBufferGeometry(width, height, length);
+        const material = new MeshBasicMaterial({
+            color: 0x4e6ef2,
+        });
+        this.mesh = new Mesh(geometry, material);
+    }
 
-// export { Box };
+    /**
+     * 元素选中
+     */
+    public selected(): void {
+        //do nothing
+    }
+
+    public update() {
+        //do nothing
+    }
+}
+
+export { Box };

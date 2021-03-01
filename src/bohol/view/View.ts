@@ -31,14 +31,14 @@ abstract class View {
     if (!ele) {
       throw new Error("element参数不能为空");
     }
-    if(this.scene) {
+    if (this.scene) {
       this.elements.push(ele);
       this.scene.add(ele.mesh);
     }
   }
 
   public addController(ctrl: Controller) {
-    if(this.camera) {
+    if (this.camera) {
       ctrl.init(this.camera, this.renderer);
       this.controllers.push(ctrl);
     }
